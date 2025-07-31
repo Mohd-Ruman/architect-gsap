@@ -30,11 +30,14 @@ export default function Home() {
       scrollTrigger: {
         trigger: ".cards",
         start: "center center",
-        end: "+=3000",
+        end: "+=4000",
         scrub: 2,
         pin: true,
+        toggleActions: 'play none none reverse'
       },
     });
+
+    tl.to({}, { duration: 1 }); // extends timeline artificially
 
     // STEP 1: First card expands from scale 0.5 to 1
     tl.fromTo(cards[0],
@@ -70,7 +73,7 @@ export default function Home() {
         borderRadius: '44px'
       }); 
 
-      // Animate previous card (if exists) out at the same time
+      // Animate previous card (if exists) out at the same time.
       if (index > 0) {
         const prevCard = cards[index - 1];
         tl.to(prevCard, {
@@ -78,7 +81,7 @@ export default function Home() {
           scale: 0.9,
           duration: 1
         }, '<'); // '<' = start at same time as previous .from
-      }
+      };
 
       // Fade in title for cards
       tl.from(card.querySelector('h1'), {
@@ -86,8 +89,10 @@ export default function Home() {
         opacity: 0, 
         duration: 1
       })
-    
 
+      // Add a dummy animation to pad the timeline
+      tl.to({}, { duration: 0.5 }); // extends timeline artificially
+    
       
     });
   }, []);
